@@ -1,2 +1,4 @@
-# JavaScript30 - My solutions to Wes Bos's JavaScript30 course :apple:
-There's never been a better time than during a "stay-in-place" order to do an app a day! An app a day keeps the doctor away, right?
+# An app a day keeps the doctor away, right? :apple:
+
+## Overview
+Follow along as I build an app a day with Wes Bos's JavaScript30 course,https://javascript30.com/. What better time to do an app a day than during a "stay-in-place" order!
