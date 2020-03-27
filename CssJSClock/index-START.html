@@ -6,7 +6,6 @@
 </head>
 <body>
 
-
     <div class="clock">
       <div class="clock-face">
         <div class="hand hour-hand"></div>
@@ -18,7 +17,7 @@
 
   <style>
     html {
-      background: #018DED url(http://unsplash.it/1500/1000?image=881&blur=50);
+      background: #018DED url(http://unsplash.it/1500/1000?image=881&blur=50px);
       background-size: cover;
       font-family: 'helvetica neue';
       text-align: center;
@@ -62,12 +61,46 @@
       background: black;
       position: absolute;
       top: 50%;
+      transform-origin: 100%;
+      transform: rotate(90deg);
+      transition: all 0.05s;
+      transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
     }
 
   </style>
 
   <script>
-
+// get each hand div
+    const secondHand = document.querySelector('.second-hand');
+    const minHand = document.querySelector('.min-hand');
+    const hourHand = document.querySelector('.hour-hand');
+// gets all hands
+    const allHands = document.querySelectorAll('.hand')
+  
+    function setDate() {
+// get the current date object
+      const now = new Date();
+// get each specified time value from the date object
+      const seconds = now.getSeconds();
+      const min = now.getMinutes();
+      const hour = now.getHours();
+// change the time value into degrees (adding 90 because they start out horizontal and not vertical)
+      const secondsDegrees = ((seconds/60 * 360)+ 90);
+      const minDegrees = ((min/60 * 360)+ 90);
+      const hourDegrees = ((hour/12 * 360)+ 90);
+// transform each selector with correct time degree
+      secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+      minHand.style.transform = `rotate(${minDegrees}deg)`;
+      hourHand.style.transform = `rotate(${hourDegrees}deg)`;
+// resets allows hand to reset properly when seconds = 60
+      if (secondsDegrees === 90) {
+        allHands.forEach(hand => hand.style.transition = 'none')
+      } else {
+        allHands.forEach(hand => hand.style.transition = '')
+      }
+    }
+// run the setDate function every second
+    setInterval(setDate, 1000); 
 
   </script>
 </body>
