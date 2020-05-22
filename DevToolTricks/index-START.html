@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Console Tricks!</title>
+</head>
+<body>
+
+  <p onClick="makeGreen()">×BREAK×DOWN×</p>
+
+  <script>
+    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+
+    //break it when the javascript runs. find the element in the elements page. right click - break on - attribute modifications
+    function makeGreen() {
+      const p = document.querySelector('p');
+      p.style.color = '#BADA55';
+      p.style.fontSize = '50px';
+    }
+
+    
+    // Regular
+    console.log('Hello')
+
+    // Interpolated
+    console.log('Hello I am a %s string!', 'happy')
+    let emotion = 'happy'
+    console.log(`Hello I am a ${emotion} string!`)
+
+    // Styled - %c adds font styling
+    //console.log('%c I am some great text', 'font-size:50px; background:red; text-shadow: 10px 10px 0 blue')
+
+    // warning! - flags it as a warning in the console 
+    console.warn('OH NOOO');
+
+    // Error :| - flags it as an error
+    console.error('Shit!');
+
+    // Info - flags it as info
+    console.info('Crocodiles eat 3-4 people per year');
+
+    // Testing - test for something. true -  nothing happens, false-  It displays the assertion
+    const p = document.querySelector('p');
+    console.assert(p.classList.contains('ouch'), 'That is wrong!');
+
+    // clearing - clears the console. 
+    console.clear();
+
+    // Viewing DOM Elements - allows you to inspect the element in the console ie: classlists, data, style, methods(prototype)
+    console.log(p);
+    console.dir(p);
+
+    console.clear()
+
+    // Grouping together - allows you easily group comments. ie - when looping an array and console.logging each element. console.groupCollapsed instead of console.group will display the grouping collapsed. 
+    dogs.forEach(dog => {
+      console.group(`${dog.name}`);
+      console.log(`This is ${dog.name}`);
+      console.log(`${dog.name} is ${dog.age} years old`);
+      console.log(`${dog.name} is ${dog.age * 7} dog years old`);
+      console.groupEnd(`${dog.name}`);
+    });
+    
+    // counting - shows how many times you have displayed that info in the console
+    console.count('Wes');
+    console.count('Wes');
+    console.count('Steve');
+    console.count('Steve');
+    console.count('Wes');
+    console.count('Steve');
+    console.count('Wes');
+    console.count('Steve');
+    console.count('Steve');
+    console.count('Steve');
+    console.count('Steve');
+    console.count('Steve');
+
+    // timing - tells you how long it takes to fetch the data.
+    console.time('fetching data');
+    fetch('https://api.github.com/users/wesbos')
+      .then(data => data.json())
+      .then(data => {
+        console.timeEnd('fetching data');
+        console.log(data);
+      });
+    
+    //table - as long as all the objects have the same variables it allows you to display it as a table
+    console.table(dogs);
+  </script>
+</body>
+</html>
