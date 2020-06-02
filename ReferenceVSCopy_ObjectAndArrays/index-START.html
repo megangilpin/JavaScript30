@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Reference VS Copy</title>
+</head>
+<body>
+
+  <script>
+    // Primitive data types are tightly coupled with the variable they are assigned to and can be copied and changed with out effecting the variable it was copied from
+    
+    let age = 100;
+    let age2 = age;
+    console.log(age, age2);
+    age = 200;
+    console.log(age, age2);
+
+    let name = 'Wes';
+    let name2 = name;
+    console.log(name, name2);
+    name = 'wesley';
+    console.log(name, name2);
+
+    // Arrays and Objects behave differently. Values are actually stored just once when instantiated, and assigning a variable just creates a pointer (reference) to that value.
+    const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
+
+    // When you thinking you are making a copy, you are actually assigning a REFERENCE  or SHALLOW COPY to the original array. 
+    const team = players;
+    console.log(players, team);
+
+    // So when you do the below::
+    team[3] = 'Lux';
+
+    // You are actually changing both players and team because team refers back to players. 
+    console.log("Results in updating both array:")
+    console.log(players, team)
+
+    //Same happens with objects:
+    const person = {
+      name: 'Wes Bos',
+      age: 80
+    };
+
+    const captain = person;
+    captain.number = 99;
+    console.log("Results in updating both objects:")
+    console.log(person, captain)
+    // Ways to make a deep copy of Arrays:
+    //1. .slice()
+    const team2 = players.slice();
+    team2[3] = 2;
+    console.log(".slice()")
+    console.log(players, team2)
+    
+    //2. .concat()
+    const team3 = [].concat(players);
+    team3[3] = 3;
+    console.log(".concat()")
+    console.log(players, team3)
+
+    //3. ES6 Spread
+    const team4 = [...players];
+    team4[3] = 4;
+    console.log("ES6 Spread");
+    console.log(players, team4);
+
+    //4. Array.from()
+    const team5 = Array.from(players);
+    team5[3] = 5;
+    console.log("Array.from()");
+    console.log(players, team5);
+
+    /// Ways to make a deep copy of Objects:
+
+    //1. Object.assign
+    const cap2 = Object.assign({}, person);
+    cap2.age = 52
+    console.log("Object.assign")
+    console.log(person, cap2);
+
+    //2.Spread operator
+    const cap3 = {...person};
+    cap3.age = 105
+    console.log("Spread Operator")
+    console.log(person, cap3);
+
+    // !!!!Important to know!!!!! this is only one level deep. Meaning if there is an object contained in an object you copied it is a shallow copy. If try to update this object it will update the original object
+
+    const wes = {
+      name: 'Wes',
+      age: 100,
+      social: {
+        twitter: '@wesbos',
+        facebook: 'wesbos.developer'
+      }
+    };
+
+    const dev = Object.assign({}, wes);
+    dev.social.twitter = "hi";
+    dev.age = 0;
+    console.log(wes, dev);
+
+    //how to make a deep copy of second level object
+    // const frontend = {...wes, social: {...wes.social}}
+    // or
+    const engineer = JSON.parse(JSON.stringify(wes))
+    engineer.social.twitter = "yo!";
+    engineer.age = 11;
+    console.log(wes, engineer);
+  </script>
+
+</body>
+</html>
