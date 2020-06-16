@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Understanding JavaScript's Capture</title>
+</head>
+<body class="bod">
+
+  <div class="one">
+    <div class="two">
+      <div class="three">
+      </div>
+    </div>
+  </div>
+
+<style>
+  html {
+    box-sizing: border-box;
+  }
+  
+  *, *:before, *:after { 
+    box-sizing: inherit; 
+  }
+
+  div {
+    width: 100%;
+    padding: 100px;
+  }
+
+  .one {
+    background: thistle;
+  }
+
+  .two {
+    background: mistyrose;
+  }
+
+  .three {
+    background: coral;
+  }
+</style>
+
+<button></button>
+<script>
+
+  const divs = document.querySelectorAll('div');
+  const button = document.querySelector('button');
+
+  function logText(e) {
+    // will log one two and three due to bubbling... browser figures out what you clicked on and bubble it up
+    console.log(this.classList.value);
+    // e.stopPropagation(); //stops bubbling will not fire the rest of the stacked event listeners
+  
+  }
+
+// browser will ripple down to from through the elements on the page ie: body, 1st div, 2nd div and so on. 
+// then captures the events then bubbles up the events as you go up. 
+  // divs.forEach(div => div.addEventListener('click', logText));
+  
+  // options object! with event listeners 
+  // capture is "trickling" meaning it will start at the "outer" element event and trickle down the "inner" elements
+  // default is false - meaning default it will "bubble up" from inner to outer element
+  // divs.forEach(div => div.addEventListener('click', logText, {capture: true}));
+
+
+  // will listen for a click and unbind itself (meaning it removes the event listener) good for a button
+  divs.forEach(div => div.addEventListener('click', logText, {
+    capture: false,
+    once: true
+  }));
+
+// good for store checkouts will allow the user to only click it once
+  button.addEventListener('click', () => {
+    console.log('clicked!');
+  }, {
+    once: true,
+  })
+</script>
+</body>
+</html>
